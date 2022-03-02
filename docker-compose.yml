@@ -3,13 +3,17 @@ version: "3.2"
 services:
   proxy:
     image: traefik:v2.0
-    command: 
+    command:
+      - --api.insecure=false
+      - "--providers.docker" # Tells Traefik to listen to docker
       - "--log.level=INFO"
       - "--api.insecure=true"
-      - "--providers.docker" # Tells Traefik to listen to docker
+      - --entryPoints.web.address=:80
+      - --entryPoints.websecure.address=:443
     ports:
-      - "3000:80"
-      - "3001:8080"
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
@@ -51,6 +55,8 @@ services:
       - "traefik.enable=true"
       - "traefik.backend=mino"
       - "traefik.http.routers.mino.rule=Host(`mino.docker.localhost`)"
+      - "traefik.http.routers.mino.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
       #- "traefik.frontend.rule=Host:mino.localhost"
     depends_on: 
       - proxy
