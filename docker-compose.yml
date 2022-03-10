@@ -10,6 +10,7 @@ services:
       - "--api.insecure=true"
       - --entryPoints.web.address=:80
       - --entryPoints.websecure.address=:443
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -17,11 +18,11 @@ services:
     labels: 
       - "traefik.enable=true"
       - "traefik.http.routers.router1.rule=host(`traefik-dashboard.spontane.fun`)"
-      - "traefik.http.routers.router1.service=service1"
-      - "traefik.http.services.service1.loadbalancer.server.port=8080"
+      - "traefik.http.routers.router1.service=traefik-dashboard"
+      - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080"
       - "traefik.http.routers.router2.rule=host(`traefik-test.spontane.fun`)"
-      - "traefik.http.routers.router2.service=service2"
-      - "traefik.http.services.service2.loadbalancer.server.port=80"
+      - "traefik.http.routers.router2.service=traefik-test"
+      - "traefik.http.services.traefik-test.loadbalancer.server.port=80"
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
