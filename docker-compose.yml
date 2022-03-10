@@ -24,7 +24,7 @@ services:
     image: containous/whoami
     labels: 
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.spontane.fun`)"
     networks: 
       - internal
   
@@ -38,7 +38,7 @@ services:
     labels: 
       - "traefik.enable=true"
       - "traefik.backend=pino"
-      - "traefik.http.routers.pino.rule=Host(`pino.docker.localhost`)"
+      - "traefik.http.routers.pino.rule=Host(`pino.spontane.fun`)"
       #- "traefik.frontend.rule=Host:pino.localhost"
     depends_on:
       - proxy
@@ -54,7 +54,7 @@ services:
     labels: 
       - "traefik.enable=true"
       - "traefik.backend=mino"
-      - "traefik.http.routers.mino.rule=Host(`mino.docker.localhost`)"
+      - "traefik.http.routers.mino.rule=Host(`mino.spontane.fun`)"
       - "traefik.http.routers.mino.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
       #- "traefik.frontend.rule=Host:mino.localhost"
